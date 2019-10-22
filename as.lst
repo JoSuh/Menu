@@ -1,0 +1,19 @@
+                        ; Program Constants
+2000                    STACK   equ     $2000
+                        
+1000                            org     $1000                 ; Data area
+1000 10 23 18           Array   db      $10, $23, $18         ; Data to manipulate
+1003                    Result  ds      1                     ; Result stored here
+                        
+2000                            org     $2000           ; Program area
+2000 cf 20 00           Start   lds     #Stack          ; Stack location
+2003 87                         clra                    ; Controlled situation
+2004 b6 10 00                   ldaa    Array           ; First Value
+2007 f6 10 01                   ldab    Array+1         ; Second Value
+200a 18 06                      aba                     ; First Value + Second Value with result in A
+200c f6 10 02                   ldab    Array+2         ; Third Value
+200f 18 16                      sba                     ; Subtract Third Value from Previous Sums
+                                                        ;         with result in A
+2011 7a 10 03                   staa Result             ; Store Results
+2014 3f                         swi
+                                end
